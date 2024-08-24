@@ -6,7 +6,7 @@ Here is the new compoment you can create your new compoment for runung js codeif
 </div>
 </load-component>
 
-In global.js file you can add js compoment 
+In global.js file you can add js components
 
 
 class LoadComponent extends HTMLElement {
