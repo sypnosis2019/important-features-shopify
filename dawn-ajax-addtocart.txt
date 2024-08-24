@@ -1,0 +1,13 @@
+<script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+        
+<div class="quick-add no-js-hidden"><product-form data-section-id="template--20735337791807__product-grid"><form method="post" action="/cart/add" id="quick-add-template--20735337791807__product-grid8656374038847" accept-charset="UTF-8" class="form" enctype="multipart/form-data" novalidate="novalidate" data-type="add-to-cart-form"><input type="hidden" name="form_type" value="product"><input type="hidden" name="utf8" value="✓"><input type="hidden" name="id" value="46205966451007" class="product-variant-id">
+                  <button id="quick-add-template--20735337791807__product-grid8656374038847-submit" type="submit" name="add" class="quick-add__submit button button--full-width button--secondary" aria-haspopup="dialog" aria-labelledby="quick-add-template--20735337791807__product-grid8656374038847-submit title-template--20735337791807__product-grid-8656374038847" aria-live="polite" data-sold-out-message="true">
+                    <span>Add to cart
+</span>
+                  <div class="loading-overlay__spinner hidden">
+                      <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                        <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                      </svg>
+                    </div>
+                  </button></form></product-form></div>

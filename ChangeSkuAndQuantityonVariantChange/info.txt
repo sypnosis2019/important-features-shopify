@@ -1,0 +1,54 @@
+https://community.shopify.com/c/shopify-design/sku-id-on-dawn/td-p/1397188
+
+1. STEP 1. Go to Online Stores > Themes > Action > Edit Code > search for main-product.liquid
+
+STEP 2. Within main-product.liquid, look for
+
+Step 3. Add these two lines underneath it.
+
+<div class="hideAll">
+    <p class="low_stock">Low stock only <span class="variant_inventory_quantity"></span> left</p>       
+</div>
+
+add code after above code 
+
+ {% capture 'variant_inventory_quantity' %}       
+    {% for variant in product.variants %}
+        {{variant.id}}:{{ variant.inventory_quantity | json }}
+        {% unless forloop.last %},{% endunless %}           
+   {% endfor %}
+{% endcapture %}  
+
+add script below the file main-product.liquid
+
+
+ <script>
+  const currentVariantQuantity = {{ product.selected_or_first_available_variant.id }};
+  const variantQuantity = { {{ variant_inventory_quantity }} };        
+  const getQuantity = (id) => {
+  let selector = document.querySelector('.variant_inventory_quantity');
+  let hide = document.querySelector('.hideAll')
+    if (variantQuantity[id]) {
+     hide.style.display = 'block'
+     selector.innerHTML = variantQuantity[id];
+    }
+    else 
+     hide.style.display = 'none'
+  }
+  getQuantity(currentVariantQuantity);
+
+</script>
+
+
+You then need to update the global.js file in the Assets folder. Find the code beginning with onVariantChange() , it should be around line 740. Update it to look like this:
+
+
+this.updateQuantity(); add this on onVariantChange() {} function
+
+after this putt
+
+updateQuantity() {
+	  getQuantity(this.currentVariant.id);
+  }
+
+now check frontend.

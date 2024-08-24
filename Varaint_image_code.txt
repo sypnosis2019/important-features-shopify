@@ -1,0 +1,25 @@
+ {% if option.name == "Metall Farbe" or option.name == "Farbe" or option.name == "Farbe des Metalls" or option.name == "FARBE"  %}
+           <label
+            for="ProductSelect-{{ section_id }}-{{ product.id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}"
+            class="variant__button-label{% unless product_available %} disabled{% endunless %} variant-image">
+              {% capture variant_image %}
+                {%- liquid
+            assign optionIndex = option.position | minus: 1 
+               for variant in product.variants
+                 if variant.options[optionIndex] == value
+                  echo variant.image | img_url: "master"
+                 break
+               endif
+            endfor
+        -%}
+              {% endcapture %}
+              <img class="variant_images" src="{{ variant_image }}">
+             <span>{{ value | escape }}</span>
+            </label>
+          
+            {% else %}
+          <label
+            for="ProductSelect-{{ section_id }}-{{ product.id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}"
+            class="variant__button-label{% unless product_available %} disabled{% endunless %}">{{ value | escape }}</label>
+            {% endif %}
+        {%- endif -%}

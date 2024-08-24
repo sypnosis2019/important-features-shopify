@@ -1,0 +1,134 @@
+{% comment %}
+When customizing theme, changes need to be SAVE before you will see the updated setting.
+{% endcomment %}
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+<div class="carousel-page">
+  
+  <div class="page-width">
+	{% if section.settings.title != blank %}
+    <div class="title-wrapper-with-link title-wrapper--self-padded-mobile title-wrapper--no-top-margin">
+        <h2 class="title">
+         {{ section.settings.title | escape }} ‹ ›
+        </h2>
+    </div>
+	{% endif %}
+  <div class="carousel-root">
+   {%- for block in section.blocks -%}
+<div class="author-information">
+  <div class="autohor-image"><img src="{{ block.settings.image | img_url: 'master' }}" class="images-autor"></div>
+  <div class="review-card__star">
+      <svg class="review-star" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+      </svg>
+
+      <svg class="review-star" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+      </svg>
+
+      <svg class="review-star" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+      </svg>
+
+      <svg class="review-star" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+      </svg>
+
+      <svg class="review-star" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+      </svg>      
+   </div>
+  <div class="autohor-name"><h3>{{ block.settings.autor-name }}</h3></div>
+  <div class="autohor-desc"><p>{{ block.settings.autor-desc  }}</p></div>
+    </div>
+   {%- endfor -%}
+    </div>
+</div>
+</div>
+ <script type="text/javascript">
+$(document).ready(function(){
+ $('.carousel-root').slick({
+  slidesToShow: 4,
+  slidesToScroll: 4,
+  infinite: false,      
+  autoplay: false,
+  autoplaySpeed: 2000,
+        responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 4,
+        slidesToScroll: 4,
+        infinite: true,
+        dots: true
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }
+    // You can unslick at a given breakpoint now by adding:
+    // settings: "unslick"
+    // instead of a settings object
+  ]
+});
+    });
+  </script>
+
+
+
+{% schema %}
+{
+"name": "Testimonial Review Slider",
+"settings": [
+{
+          "type": "text",
+          "id": "title",
+          "label": "Heading"
+        }
+],
+"blocks": [
+    {
+      "type": "image",
+      "name": "blocks image",
+      "settings": [
+         {
+          "type": "image_picker",
+          "id": "image",
+          "label": "image main"
+        },
+ 		{
+          "type": "text",
+          "id": "autor-name",
+          "label": "Autor Name"
+        },
+ 		{
+          "type": "text",
+          "id": "autor-desc",
+          "label": "Autor Description"
+        }
+]
+}
+],
+
+"presets": [
+{
+"name": "Custom Slider"
+}
+]
+}
+
+{% endschema %}

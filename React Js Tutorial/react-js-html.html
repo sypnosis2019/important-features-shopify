@@ -1,0 +1,38 @@
+<!-- The first link is that of the core React library API itself". -->
+<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+
+<!-- The second link is that of the React DOM needed to render to the DOM". -->
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+
+<!-- The 3rd link is that of Babel, which is needed to compile our React code so it is understood by all browsers". -->
+<script src='https://unpkg.com/babel-standalone@6.26.0/babel.js'></script>
+
+<!-- Load the React component file. -->
+<script type="text/babel" src="like_widget.js"></script>
+
+<!-- ... Your existing HTML markup ... -->
+
+<div id="like_widget_container"></div>
+
+<!-- ... Your existing HTML markup ... -->
+
+<script type="text/babel">
+
+// Custom React component function that returns a JSX syntax
+
+
+      const ActualWidget = () => <h1>Hello World</h1>;
+
+
+      // Select the container
+
+
+      const container = document.getElementById("like_widget_container");
+
+
+      // Render the component to the DOM
+
+
+      ReactDOM.render(<ActualWidget />, container);
+
+      </script>

@@ -1,0 +1,16 @@
+
+   <div class="sub-collection"> 
+     
+     {% assign collection_handle = collection.handle %}
+  <div class="container">   
+  <div class="row">
+  {% for link in linklists[collection_handle].links %}
+   {% assign sub_collection = link.object %}
+  <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3">        
+            <a href="{{ link.url }}"><img src="{{ link.object.image.src | collection_img_url: 'large' }}" alt="{{ link.object.title | escape  }}" /></a>    
+            <h4><a href="{{ link.url }}">{{link.title }}</a></h4>
+      </div>
+  {% endfor %}
+  </div>
+   </div>
+   </div>

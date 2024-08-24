@@ -1,0 +1,22 @@
+{% assign excluded_titles = section.settings.excluded_collection_titles | split: ', ' %}
+
+{% for collection in collections %}
+  {% unless excluded_titles contains collection.title %}
+    <!-- Display collection information here -->
+    <h2>{{ collection.title }}</h2>
+    <!-- Add more collection details as needed -->
+  {% endunless %}
+{% endfor %}
+
+
+{
+  "name": "General",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Excluded Collection Titles",
+      "id": "excluded_collection_titles",
+      "default": "Collection 1, Collection 2, Collection 3"
+    }
+  ]
+}

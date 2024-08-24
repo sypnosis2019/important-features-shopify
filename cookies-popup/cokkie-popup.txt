@@ -1,0 +1,466 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{{ 'ajax-submit-form.js' | asset_url }}" defer="defer"></script>
+{% if customer %}
+{% else %}
+<div class="fail_message">You have alreday suscribed</div>
+ <div class="lightbox_popups test">
+  
+  <div class="popup_content"><div class="custom_text"><h2 class="custo_one">GRAPHS. LAUGHS. KNAFS.</h2>
+    <h3 class="custo_two">Sign Up for Our Email
+ List. We Think You'll Enjoy It.</h3></div>
+    <div class="news_later"> 
+      <div class="newsletter-section{% if section.settings.show_background %} index-section--newsletter-background{% endif %}">
+  {%- assign formId = 'Contact_' | append: section.id -%}
+    {% form 'customer', id: formId, novalidate: 'novalidate', class: 'contact-form form-single-field' %}
+      {%- if form.posted_successfully? -%}
+        <p class="form-message form-message--success" tabindex="-1" data-form-status>
+          {{ 'general.newsletter_form.confirmation' | t }}
+        </p>
+      {%- endif -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <div class="input-group {% if form.errors %} input-group--error{% endif %}">
+        <input required type="email"
+          name="contact[email]"
+          id="{{ formId }}-email"
+          class="input-group__field{% if form.errors %} input--error{% endif %}"
+          value="{{ form.email }}"
+          placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}"
+          aria-label="{{ 'general.newsletter_form.email_placeholder' | t }}"
+          aria-required="true"
+          autocorrect="off"
+          autocapitalize="off"
+          {% if form.errors %}
+            aria-invalid="true"
+            aria-describedby="{{ formId }}-email-error"
+            data-form-status
+          {% endif %}
+          >
+        <span class="input-group__btn">
+          <button type="submit" class="btn" name="commit" id="Subscribe">
+            <span>Submit</span>
+          </button>
+        </span>
+      </div>
+      {%- if form.errors contains 'email' -%}
+        <span id="{{ formId }}-email-error" class="input-error-message">
+          <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+          {% render 'icon-error' %}
+          <span>{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+        </span>
+      {%- endif -%}        
+    {% endform %}        
+        <p class="bysing">By signing up, you agree to receive occasional marketing emails from Knafs. We will never sell your info, and we never spam. Ain't nobody got time for spam. We will keep it useful and fun.</p>      
+  
+        
+        
+     
+        
+ 
+        
+</div>
+</div>
+  <div class="close_popup">
+  <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 40 40"><path d="M23.868 20.015L39.117 4.78c1.11-1.108 1.11-2.77 0-3.877-1.109-1.108-2.773-1.108-3.882 0L19.986 16.137 4.737.904C3.628-.204 1.965-.204.856.904c-1.11 1.108-1.11 2.77 0 3.877l15.249 15.234L.855 35.248c-1.108 1.108-1.108 2.77 0 3.877.555.554 1.248.831 1.942.831s1.386-.277 1.94-.83l15.25-15.234 15.248 15.233c.555.554 1.248.831 1.941.831s1.387-.277 1.941-.83c1.11-1.109 1.11-2.77 0-3.878L23.868 20.015z" class="layer"></path></svg>  
+  </div></div>
+  </div>
+
+{% endif %}
+<script>
+  
+  
+  function createCookie(name,value,days) {
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime()+(days*24*60*60*1000));
+        var expires = "; expires="+date.toGMTString();
+    }
+    else var expires = "";
+    document.cookie = name+"="+value+expires+"; path=/";
+}
+
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+
+function eraseCookie(name) {
+    createCookie(name,"",-1);
+}
+  
+$(document).ready(function () {   
+  
+  if (!readCookie('visited')) {     
+       setTimeout(function(){ $('.lightbox_popups').fadeIn(500); }, 5000);
+     }else{
+  $('.lightbox_popups').fadeOut(500);
+    }
+  
+
+  $(".close_popup").click(function(){
+   $('.lightbox_popups').fadeOut(500);
+    createCookie('visited', null, 30);
+});
+  $(".shopify-challenge__button").click(function(){
+   
+   $('.lightbox_popups').fadeOut(500);
+     $('.fail_message').fadeIn(500);
+    $('.fail_message').show();
+    createCookie('visited', null, 30);
+    
+});
+  
+});
+  
+  
+ $(document).ready(function () {
+   if (window.location.href.indexOf("?customer_posted=true") > -1) {
+    $('html, body').animate({scrollTop:0},100);
+    $('#Contact_custom_popups .input-group').hide();
+    $('.custom_text').hide();
+    $('.bysing').hide();     
+    $('.lightbox_popups').fadeIn(500); 
+    
+   }
+   
+   if (window.location.href.indexOf("?contact%5Btags%5D=newsletter&form_type=customer") > -1) {
+    $('html, body').animate({scrollTop:0},100);
+   }
+   
+   
+   
+}); 
+  
+</script>
+<style>
+  .fail_message{
+     display: none;
+  }
+  .lightbox_popups {
+    display: none;
+    background-color: #0000004a;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 999;
+  }
+.popup_content {
+    position: fixed;
+    top: 50%;
+    left: 50%;    
+    width: 100%;    
+    background:url({{ 'Lightbox-popup-image-only.jpg' | asset_url }});
+    max-width: 600px;
+    padding: 30px;
+    border-radius: 25px;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+  .popup_content {
+    text-align: center;
+    color: #fff;
+}
+div#shopify-section-custom_popups {
+    padding: 0;
+}  
+.popup_content h2 {
+    font-size: 2rem;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+.popup_content h3 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: normal;
+    font-family: "Work Sans",sans-serif;
+}
+.popup_content form {
+    margin-bottom: 0;
+    margin-top: 5em;
+}
+.close_popup {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+}
+.close_popup svg {
+    color: #fff;
+}
+.popup_content p {
+    color: #fff;
+    font-size: 14px;
+    font-style: italic;
+    text-align: justify;
+}
+.close_popup:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}  
+ .popup_content form button, .popup_content form button:hover {
+    background-color: #000 !important;
+    padding-left: 30px;
+    padding-right: 30px;
+} 
+body.template-captcha .lightbox_popups {
+    display: none !important;
+}  
+.popup_content .form-message--success {
+    color: #1f873d;
+} 
+.popup_content form button:focus, .popup_content form input:focus {
+    outline: 0;
+} 
+.popup_content form #Contact_custom_popups-email-error {
+    color: #f96767;
+}  
+.news_later .newsletter-section.index-section--newsletter-background {
+    background-color: transparent;
+}  
+  
+  
+  
+@media screen and (max-width: 479px) {
+  .popup_content h2 {
+    font-size: 1.5rem;
+    margin-top: 15px;
+}
+.popup_content form {
+    margin-top: 0;
+}  
+.popup_content {
+    border-radius: 15px;
+    background-position: center;
+} 
+.close_popup svg {
+    width: 15px;
+}  
+}  
+  
+</style>
+
+
+{% schema %}
+{
+  "name": {
+    "da": "Nyhedsbrev",
+    "de": "Newsletter",
+    "en": "Newsletter",
+    "es": "Boletín",
+    "fi": "Uutiskirje",
+    "fr": "Newsletter",
+    "hi": "न्यूज़लेटर",
+    "it": "Newsletter",
+    "ja": "ニュースレター",
+    "ko": "뉴스레터",
+    "ms": "Surat berita",
+    "nb": "Nyhetsbrev",
+    "nl": "Nieuwsbrief",
+    "pt-BR": "Newsletter",
+    "pt-PT": "Newsletter",
+    "sv": "Nyhetsbrev",
+    "th": "จดหมายข่าว",
+    "zh-CN": "新闻通讯",
+    "zh-TW": "電子報"
+  },
+  "class": "index-section index-section--flush",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": {
+        "da": "Overskrift",
+        "de": "Titel",
+        "en": "Heading",
+        "es": "Título",
+        "fi": "Otsake",
+        "fr": "En-tête",
+        "hi": "शीर्षक",
+        "it": "Heading",
+        "ja": "見出し",
+        "ko": "제목",
+        "ms": "Tajuk",
+        "nb": "Overskrift",
+        "nl": "Kop",
+        "pt-BR": "Título",
+        "pt-PT": "Título",
+        "sv": "Rubrik",
+        "th": "ส่วนหัว",
+        "zh-CN": "标题",
+        "zh-TW": "標題"
+      },
+      "default": {
+        "da": "Tilmeld dig vores nyhedsbrev",
+        "de": "Unseren Newsletter abonnieren",
+        "en": "Subscribe to our newsletter",
+        "es": "Suscríbete a nuestro boletín de noticias",
+        "fi": "Tilaa uutiskirjeemme",
+        "fr": "S'inscrire à la newsletter",
+        "hi": "हमारे न्यूज़लेटर की सदस्यता लें",
+        "it": "Iscriviti alla nostra newsletter",
+        "ja": "ストアからのお知らせを受け取る",
+        "ko": "뉴스 레터 구독",
+        "ms": "Langgan surat berita kami",
+        "nb": "Abonner på nyhetsbrevet vårt",
+        "nl": "Abonneren op onze nieuwsbrief",
+        "pt-BR": "Assine a nossa newsletter",
+        "pt-PT": "Subscreva a nossa newsletter",
+        "sv": "Prenumerera på vårt nyhetsbrev",
+        "th": "สมัครรับจดหมายข่าวของเรา",
+        "zh-CN": "订阅我们的新闻通讯",
+        "zh-TW": "訂閱我們的電子報"
+      }
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": {
+        "da": "Underoverskrift",
+        "de": "Unter-Überschrift",
+        "en": "Subheading",
+        "es": "Subtítulo",
+        "fi": "Alaotsikko",
+        "fr": "Sous-titre",
+        "hi": "उपशीर्षक",
+        "it": "Sottotitolo",
+        "ja": "小見出し",
+        "ko": "소제목",
+        "ms": "Sub tajuk",
+        "nb": "Underoverskrift",
+        "nl": "Subkop",
+        "pt-BR": "Subtítulo",
+        "pt-PT": "Subtítulo",
+        "sv": "Underrubrik",
+        "th": "หัวเรื่องย่อย",
+        "zh-CN": "副标题",
+        "zh-TW": "子標題"
+      },
+      "default": {
+        "da": "<p>En kort sætning, der beskriver, hvad folk får ud af at tilmelde sig</p>",
+        "de": "<p>Eine kurze Beschreibung zum Inhalt des Newsletters</p>",
+        "en": "<p>A short sentence describing what someone will receive by subscribing</p>",
+        "es": "<p>Una frase corta que describe lo que las personas recibirán al suscribirse</p>",
+        "fi": "<p>Lyhyt lause, jossa kuvataan, mitä käyttäjä saa tilaamalla</p>",
+        "fr": "<p>Petite phrase qui décrit ce qu'on reçoit en s'inscrivant</p>",
+        "hi": "<p>किसी को सदस्यता लेने से क्या प्राप्त होगा, यह बताने वाला एक छोटा वाक्य</p>",
+        "it": "<p>Una breve frase che descrive ciò che qualcuno riceverà effettuando l'iscrizione</p>",
+        "ja": "<p>メルマガ購読者に向けたメッセージを入れましょう</p>",
+        "ko": "<p>구독을 통해 받을 것을 설명해주는 짧은 문장</p>",
+        "ms": "<p>Satu perkataan pendek yang menerangkan apa yang seseorang akan terima dengan melanggan</p>",
+        "nb": "<p>En kort setning som beskriver hva man får ved å abonnere</p>",
+        "nl": "<p>Een korte beschrijving van wat iemand ontvangt door zich te abonneren</p>",
+        "pt-BR": "<p>Uma frase curta que descreva o que alguém receberá ao assinar</p>",
+        "pt-PT": "<p>Uma frase curta que descreve o que será recebido ao subscrever</p>",
+        "sv": "<p>En kort mening som beskriver vad som erhålls med prenumeration</p>",
+        "th": "<p>ประโยคสั้นๆ ที่อธิบายถึงสิ่งที่บางคนจะได้รับจากการสมัครรับข้อมูล</p>",
+        "zh-CN": "<p>一个简短的句子，用于描述订阅者将收到的内容</p>",
+        "zh-TW": "<p>簡短說明訂閱者可收到之內容</p>"
+      }
+    },
+    {
+      "id": "show_background",
+      "type": "checkbox",
+      "label": {
+        "da": "Vis baggrund",
+        "de": "Hintergrund anzeigen",
+        "en": "Show background",
+        "es": "Mostrar fondo",
+        "fi": "Näytä tausta",
+        "fr": "Afficher l'arrière-plan",
+        "hi": "पृष्ठभूमि दिखाएं",
+        "it": "Mostra sfondo",
+        "ja": "背景を表示する",
+        "ko": "배경 표시",
+        "ms": "Tunjukkan latar belakang",
+        "nb": "Vis bakgrunn",
+        "nl": "Toon achtergrond",
+        "pt-BR": "Exibir plano de fundo",
+        "pt-PT": "Mostrar fundo",
+        "sv": "Visa bakgrund",
+        "th": "แสดงพื้นหลัง",
+        "zh-CN": "显示背景",
+        "zh-TW": "顯示背景"
+      },
+      "default": true
+    },
+    {
+      "type": "paragraph",
+      "content": {
+        "da": "Alle kunder, der tilmelder sig, får oprettet en konto i Shopify. [Se kunder](/admin/customers?query=&accepts_marketing=1)",
+        "de": "Alle Kunden, die sich eintragen, bekommen ein Konto in Shopify. [Kunden ansehen](/admin/customers?query=&accepts_marketing=1)",
+        "en": "Any customers who sign up will have an account created for them in Shopify. [View customers](/admin/customers?query=&accepts_marketing=1)",
+        "es": "Todos los clientes que se registren tendrán una cuenta creada para ellos en Shopify. [Ver clientes](/admin/customers?query=&accepts_marketing=1)",
+        "fi": "Tilaaville asiakkaille luodaan tili Shopify-palvelussa. [Näytä asiakkaat](/admin/customers?query=&accepts_marketing=1)",
+        "fr": "Tous les clients qui s'inscrivent auront un compte créé pour eux sur Shopify. [Voir les clients](/admin/customers?query=&accepts_marketing=1)",
+        "hi": "साइन अप करने वाले किसी भी ग्राहक के लिए Shopify में एक खाता बनाया जाएगा. [ग्राहक देखें](/admin/customers?query=&accepts_marketing=1)",
+        "it": "Qualsiasi cliente che si iscrive avrà un account creato appositamente su Shopify. [Visualizza clienti](/admin/customers?query=&accepts_marketing=1)",
+        "ja": "サインアップしたお客様は、Shopifyでアカウントが作成されます。[お客様を表示](/admin/customers?query=&accepts_marketing=1)",
+        "ko": "가입한 고객은 Shopify에서 생성된 계정을 보유하게 됩니다. [고객보기](/admin/customers? query=& accepts_marketing=1)",
+        "ms": "Mana-mana pelanggan yang mendaftar akan mempunyai akaun yang dicipta untuk mereka di Shopify. [Lihat pelanggan](/admin/pelanggan?Query=&accepts_marketing=1)",
+        "nb": "Alle kunder som melder seg på, vil få opprettet en konto i Shopify. [Se kunder](/admin/customers?query=&accepts_marketing=1)",
+        "nl": "Voor alle klanten die zich aanmelden, wordt een Shopify-account gemaakt. [Klanten weergeven](/admin/customers?query=&accepts_marketing=1)",
+        "pt-BR": "Todos os clientes que se inscreverem terão uma conta criada para eles na Shopify. [View customers](/admin/customers?query=&accepts_marketing=1)",
+        "pt-PT": "Será criada uma conta na Shopify para todos os clientes que se registarem. [Ver clientes](/admin/customers?query=&accepts_marketing=1)",
+        "sv": "Alla kunder som registrerar sig kommer att få ett konto skapat i Shopify. [Visa kunder](/ admin / kunder? Query = & accepts_marketing = 1)",
+        "th": "ระบบจะสร้างบัญชีผู้ใช้ใน Shopify ให้แก่ลูกค้ารายใดก็ตามที่ลงทะเบียน [ดูลูกค้า](/admin/customers?query=&accepts_marketing=1)",
+        "zh-CN": "任何注册用户都将在 Shopify 中拥有一个为他们创建的帐户。[查看客户](/admin/customers?query=&accepts_marketing=1)",
+        "zh-TW": "顧客註冊後就可以擁有 Shopify 帳戶。[檢視顧客](/admin/customers?query=&accepts_marketing=1)"
+      }
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "da": "Nyhedsbrev",
+        "de": "Newsletter",
+        "en": "Newsletter",
+        "es": "Boletín",
+        "fi": "Uutiskirje",
+        "fr": "Newsletter",
+        "hi": "न्यूज़लेटर",
+        "it": "Newsletter",
+        "ja": "ニュースレター",
+        "ko": "뉴스레터",
+        "ms": "Surat berita",
+        "nb": "Nyhetsbrev",
+        "nl": "Nieuwsbrief",
+        "pt-BR": "Newsletter",
+        "pt-PT": "Newsletter",
+        "sv": "Nyhetsbrev",
+        "th": "จดหมายข่าว",
+        "zh-CN": "新闻通讯",
+        "zh-TW": "電子報"
+      },
+      "category": {
+        "da": "Kampagne",
+        "de": "Promotional",
+        "en": "Promotional",
+        "es": "Promocional",
+        "fi": "Mainonnallinen",
+        "fr": "Promotionnel",
+        "hi": "प्रमोशनल",
+        "it": "Promozionale",
+        "ja": "プロモーション用",
+        "ko": "프로모션",
+        "ms": "Promosi",
+        "nb": "Kampanjer",
+        "nl": "Promotioneel",
+        "pt-BR": "Promocional",
+        "pt-PT": "Promocional",
+        "sv": "Kampanjer",
+        "th": "ส่งเสริมการขาย",
+        "zh-CN": "促销",
+        "zh-TW": "宣傳活動"
+      }
+    }
+  ]
+}
+{% endschema %}

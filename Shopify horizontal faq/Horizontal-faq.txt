@@ -1,0 +1,333 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+{% liquid
+  assign image_width = section.settings.image_width | times: 15
+  assign flex_direction = 'row'
+  if section.settings.image_alignment == 'right'
+    assign flex_direction = 'row-reverse'
+  endif
+%}
+{%- liquid
+  assign default_color = 'rgba(0,0,0,0)'
+  assign page_title = section.settings.page_title
+  assign page_title_color = section.settings.page_title_color
+  assign navigation_bg_color = section.settings.navigation_bg_color
+  assign navigation_text_color = section.settings.navigation_text_color
+  assign question_color = section.settings.question_color
+  assign tab_controls = ''
+  assign tab_contents = ''
+  assign first_tab_contents = false
+-%}
+
+<div
+  class="faq-advanced-main-color color-{{ section.settings.color_scheme }} gradient"
+  id="section-{{section.id}}"
+>
+  <div
+    class="faq-advanced-main section-{{ section.id }}-padding {{ section.settings.custom-class }} {{ section.settings.custom-class }}"
+    id="section-{{section.id}}"
+  >
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'nav-item' -%}
+        {%- liquid
+          assign title = block.settings.title
+          assign icon_type = block.settings.icon_type
+          assign icon_image = block.settings.icon_image
+          assign icon_svg = block.settings.icon_svg
+          if forloop.first
+            assign active = 'active'
+          else
+            assign active = ''
+          endif
+        -%}
+        {%- capture tab_control_item -%}
+        <a href="javascript:void(0)" class="tab-control-item js-tab-control-item text-center {{active}}" data-target="t{{block.id}}">
+          <div class="tab-control-item_wrapper">
+            <div class="tab-control-item_icon">
+              {%- if icon_type == 'image' -%}
+                {%
+                  include "framework--image",
+                  image: icon_image,
+                  full_width: true
+                %}
+              {%- else -%}
+                {{icon_svg}}
+              {%- endif -%}
+            </div>
+            <p class="tab-control-item_title">{{title}}</p>
+          </div>
+        </a>
+      {%- endcapture -%}
+
+        {%- assign tab_controls = tab_controls | append: tab_control_item -%}
+
+        {%- capture tab_content_item -%}
+        <div class="tab-content-item js-tab-content-item {{active}}" id="t{{block.id}}">
+          {%- for b in section.blocks offset: forloop.index -%}
+            {%- if b.type == 'question-answer' -%}
+              <div class="question-answer">
+                <div class="question js-question accordion">
+                  <span>{{b.settings.title}}</span>
+                  <div class="icon">
+                    <svg class="svg-minus" width="17" height="2" viewBox="0 0 17 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M0.594238 0.272766V1.72731H16.5942V0.272766H0.594238Z" fill="black"/>
+                    </svg>
+                    <svg class="svg-plus" width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7.86697 0V7.27273H0.594238V8.72727H7.86697V16H9.32151V8.72727H16.5942V7.27273H9.32151V0H7.86697Z" fill="black"/>
+                    </svg>
+                  </div>
+
+                </div>
+                <div class="answer js-answer panel">{{b.settings.answer}}</div>
+              </div>
+            {%- else -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endcapture -%}
+        {%- assign tab_contents = tab_contents | append: tab_content_item -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    <div class="section-faqs-advanced" data-section-id="{{section.id}}" data-section-type="faqs-advanced">
+      <div class="section-wrapper">
+        <div class="page-title text-center" style="display: block;">
+          <h2 style="color: {{page_title_color}}">{{ page_title | default: page.title }}</h2>
+        </div>
+        <div class="section-header page-width">
+          <div class="section-header_wrapper">
+            <nav class="tab-control-list js-owl">
+              {{ tab_controls }}
+            </nav>
+            <div class="tab-control-buttons">
+              <a href="javascript:void(0)" class="btn-arrow-left">
+                <svg
+                  class="svg-angle-left"
+                  width="20"
+                  height="21"
+                  viewBox="0 0 20 21"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M12.452 5.016C12.898 5.452 12.933 6.059 12.452 6.592L8.705 10.5L12.452 14.408C12.933 14.941 12.898 15.549 12.452 15.982C12.007 16.418 11.255 16.39 10.837 15.982C10.419 15.576 6.335 11.287 6.335 11.287C6.112 11.07 6 10.785 6 10.5C6 10.215 6.112 9.93 6.335 9.711C6.335 9.711 10.419 5.424 10.837 5.016C11.255 4.608 12.007 4.58 12.452 5.016V5.016Z" fill="#174341"/>
+                </svg>
+              </a>
+              <a href="javascript:void(0)" class="btn-arrow-right">
+                <svg
+                  class="svg-angle-right"
+                  width="20"
+                  height="21"
+                  viewBox="0 0 20 21"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M7.54801 15.984C7.10201 15.548 7.06701 14.941 7.54801 14.408L11.295 10.5L7.54801 6.59201C7.06701 6.05901 7.10201 5.45101 7.54801 5.01801C7.99301 4.58201 8.74501 4.61001 9.16301 5.01801C9.58101 5.42401 13.665 9.71301 13.665 9.71301C13.888 9.93001 14 10.215 14 10.5C14 10.785 13.888 11.07 13.665 11.289C13.665 11.289 9.58101 15.576 9.16301 15.984C8.74501 16.392 7.99301 16.42 7.54801 15.984Z" fill="#174341"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="section-body page-width">
+          <div class="tab-content-list">
+            {{ tab_contents }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  {%- if page_title_color != default_color -%}.section-faqs-advanced .page-title h2{color: {{page_title_color}};}{%- endif -%}
+
+  {%- if navigation_bg_color != default_color -%}.section-faqs-advanced .section-header {background-color: {{navigation_bg_color}};}{%- endif -%}
+
+  {%- if navigation_text_color != default_color -%}.tab-control-item_title {color: {{navigation_text_color}};}{%- endif -%}
+  {%- if navigation_text_color != default_color -%}.question {color: {{question_color}};}{%- endif -%}
+</style>
+
+<script type="application/javascript">
+  (() => {
+    let tabControlList = document.querySelectorAll('.js-tab-control-item');
+    let tabContentList = document.querySelectorAll('.js-tab-content-item');
+
+    tabControlList.forEach(element => {
+      let id = element.dataset.target
+      element.addEventListener('click', function(){
+        if(this.classList.contains('active')){
+          return
+        }else{
+          [...tabControlList].find(i => i.classList.contains('active') && (i.classList.remove('active')), true);
+          [...tabContentList].find(i => i.classList.contains('active') && (i.classList.remove('active')), true);
+          this.classList.add('active');
+          [...tabContentList].find(i => i.id == id && (i.classList.add('active')), true);
+        }
+      })
+    });
+  })()
+</script>
+
+<script>
+  var acc = document.getElementsByClassName("accordion");
+  var i;
+
+  for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var panel = this.nextElementSibling;
+      if (panel.style.maxHeight) {
+        panel.style.maxHeight = null;
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      }
+    });
+  }
+</script>
+
+{%- schema -%}
+{
+  "name" : "FAQs advanced",
+  "class" : "js-faqs-advanced",
+  "tag" : "section",
+  "settings" : [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "info": "t:sections.all.colors.has_cards_info",
+      "default": "background-1"
+    },
+    {
+      "type": "text",
+      "id": "page_title",
+      "label": "Page title",
+      "default" : "FAQS"
+    },
+    {
+      "type": "color",
+      "id": "page_title_color",
+      "label": "Page title color",
+      "default" : "#9e936c"
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "color",
+      "id": "navigation_bg_color",
+      "label": "Background color",
+      "default" : "#F7F7F7"
+    },
+    {
+      "type": "color",
+      "id": "navigation_text_color",
+      "label": "Text color",
+      "default" : "#174341"
+    },
+    {
+      "type": "header",
+      "content": "Contents"
+    },
+    {
+      "type": "color",
+      "id": "question_color",
+      "label": "Question color",
+      "default" : "#9E936C"
+    },
+     {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type" : "nav-item",
+      "name" : "Nav item",
+      "settings" : [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default" : "Nav title"
+        },
+        {
+          "type": "select",
+          "id": "icon_type",
+          "label" : "Icon type",
+          "options": [
+           {
+              "value": "image",
+              "label": "Image"
+           },
+           {
+             "value": "svg",
+             "label": "SVG"
+           }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Image"
+        },
+        {
+          "type": "html",
+          "id": "icon_svg",
+          "label": "Svg"
+        }
+      ]
+    },
+    {
+      "type" : "question-answer",
+      "name" : "[+] Question and Answer",
+      "settings" : [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Question",
+          "default" : "HOW MUCH DO I PAY FOR MY MEMBERSHIP?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default" : "<p>If you are signed up to one of our recurring subscriptions (monthly, every two months or quarterly membership options) we charge you $99 every time you’re due a box. You won’t pay anything for the months that you’re not due a box or if you decide to pause or skip a box. Payment is taken on the 3rd of each month. There’s no joining fee and we won’t charge you for amending or cancelling your subscription. Oh and did we mention that shipping is free on all subscription boxes?</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQs advanced"
+    }
+  ]
+}
+{%- endschema -%}

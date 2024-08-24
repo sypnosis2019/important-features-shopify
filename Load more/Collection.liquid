@@ -1,0 +1,27 @@
+{{ 'ajaxinate.min.js' | asset_url | script_tag }}
+
+
+<div id="Huratips-Pagination" class="infinite_next">
+    {% if paginate.next %}
+    <a class="button" href="{{ paginate.next.url }}">Load More</a>    
+    {% endif %}  
+</div>
+
+
+
+<script>
+const endlessCollection = new Ajaxinate({
+container: '#product-grid',
+pagination: '.infinite_next',
+});
+</script>
+
+
+add this in facets js in this function "static renderProductCount(html)"
+
+
+    
+    const endlessCollection = new Ajaxinate({
+		container: '#product-grid',
+		pagination: '.infinite_next',
+    }); 

@@ -1,0 +1,154 @@
+{% for block in section.blocks %} 
+<div class="team-sect-main {% if forloop.index == 1 %}active{% endif %}" data-loop="co{{forloop.index}}l">
+<div class="team-inner">
+	<div class="team-col">
+		<div class="teamup">
+          <h2><span>{{block.settings.number}} </span>{{block.settings.name}}</h2>
+          <p>
+            <a href="{{block.settings.instaurl}}" target="_blank">
+              {{block.settings.insta}}
+            </a>
+          </p>
+		</div>
+		
+      <div class="teambottom">	
+      {% for block in section.blocks %} 			         
+		<div class="teamname{% if forloop.index == 1 %} active{% endif %}" data-loop="co{{forloop.index}}l">
+		<span class="teamnum">{{block.settings.number}}</span>
+		<h2>{{block.settings.name}} </h2>          
+        </div>	
+      {% endfor %}	   
+		</div>
+	
+      
+	</div>
+	
+	<div class="team-col">
+       <div class="teamcontanttop">{{block.settings.contenttop}} </div>	
+	 <div class="teamcontant">{{block.settings.content}} </div>	 
+	</div>
+	
+	<div class="team-col">
+	<div class="teamimg"> <img src="{{block.settings.image | img_url: 'master' }}" /></div>
+	</div>
+</div>
+
+<div class="team-banner-bottom">
+ <div class="team-banner-inner">
+   <img src="{{block.settings.bannerimage | img_url: 'master' }}" />
+ </div>
+</div>
+  
+
+
+</div>  
+
+
+
+{% endfor %}
+
+
+
+
+<script>  
+$(document).ready(function(){
+    $(".teamname").on("click", function(){
+        var dataId = $(this).attr("data-loop");
+        //alert("The data-id of clicked item is: " + dataId);
+      
+      
+      $('.team-sect-main').removeClass("active");
+      $('.teamname').removeClass("active");
+      $('.teamname[data-loop="' + dataId + '"]').toggleClass("active");
+      $('.team-sect-main[data-loop="' + dataId + '"]').toggleClass("active");
+
+      
+      
+    });
+});    
+</script>  
+
+
+
+<style>  
+.team-sect-main {
+    display: none;
+}
+.team-sect-main.active {
+    display: block;
+}  
+</style>
+
+
+
+{% schema %}
+  {
+    "name": "Team",
+    "class": "team-section", 
+    "settings": [
+		
+],
+"blocks": [
+		{
+		"type": "TeamName",
+		"name": "Team Name",
+		"limit": 6,
+		"settings": [
+		{
+        "type": "text",
+        "id": "number",
+        "label": "Number"
+  	    },
+		{
+        "type": "text",
+        "id": "name",
+        "label": "Name"
+  	    },
+		{
+        "type": "text",
+        "id": "insta",
+        "label": "Instagram"
+  	    },
+		{
+        "type": "url",
+        "id": "instaurl",
+        "label": "Instagram Url"
+  	    },
+		{	
+		"type": "textarea",
+        "id": "contenttop",
+        "label": "Content"
+  	    },
+		{	
+		"type": "richtext",
+        "id": "content",
+        "label": "Content"
+  	    },
+		{	
+		"type": "image_picker",
+        "id": "image",
+        "label": "Image"
+  	    },
+		{	
+		"type": "image_picker",
+        "id": "bannerimage",
+        "label": "Banner Image"
+  	    }
+		
+
+	]
+	}
+	],
+ 	  "presets": [
+    {
+      "name": "Team"
+    }
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

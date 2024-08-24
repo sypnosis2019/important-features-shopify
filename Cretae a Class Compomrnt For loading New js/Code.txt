@@ -1,0 +1,32 @@
+Here is the new compoment you can create your new compoment for runung js codeif you want
+
+<load-component class="remove_css">
+<div class="media_slider">
+
+</div>
+</load-component>
+
+In global.js file you can add js compoment 
+
+
+class LoadComponent extends HTMLElement {
+  constructor() {
+    super();
+
+     var element = this.querySelector(".media_slider");
+     if (element) {
+       $(element).slick({
+       slidesToShow: 1,
+  arrows: true,
+  draggable: true,  
+  dots: true,   
+  autoplay: false,
+  infinite: true,
+  autoplaySpeed: 4000,
+  pauseOnHover: false,
+  pauseOnFocus: false  
+        });
+    }
+  }
+}
+customElements.define('load-component', LoadComponent);

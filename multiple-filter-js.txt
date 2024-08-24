@@ -1,0 +1,91 @@
+<head>
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+  <!--  Add the slick-theme.css if you want default styling  -->
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css">
+  <!--  [Attributes by Finsweet] CMS Sort  -->
+  <script async="" src="https://cdn.jsdelivr.net/npm/@finsweet/attributes-cmssort@1/cmssort.js"></script>
+  <!--  [Attributes by Finsweet] CMS Filter  -->
+  <script async="" src="https://cdn.jsdelivr.net/npm/@finsweet/attributes-cmsfilter@1/cmsfilter.js"></script>
+  <!--  [Attributes by Finsweet] CMS Load  -->
+  <script async="" src="https://cdn.jsdelivr.net/npm/@finsweet/attributes-cmsload@1/cmsload.js"></script>
+</head>
+
+
+<select id="field" name="field" data-name="Field" fs-cmssort-element="trigger" class="career__section2__select w-select">
+                  <option value="date-desc">Most Recent</option>
+                  <option value="date-asc">Most Oldest</option>
+                </select><select id="field-2" name="field-2" data-name="Field 2" fs-cmsfilter-field="location" class="career__section2__select w-select">
+                  <option value="">Location</option>
+                  <option value="Sydney, Australia">Sydney, Australia</option>
+                  <option value="Melbourne, Australia">Melbourne, Australia</option>
+                </select><select id="field-2" name="field-2" data-name="Field 2" fs-cmsfilter-field="team" class="career__section2__select w-select">
+                  <option value="">Team</option>
+                  <option value="Marketing">Marketing</option>
+                   <option value="Digital Marketing">Digital Marketing</option>
+                </select><select id="field-2" name="field-2" data-name="Field 2" fs-cmsfilter-field="contract" class="career__section2__select w-select">
+                  <option value="">Contract Type</option>
+                  <option value="Full-time">Full-time</option>
+                  <option value="Part-time">Part-time</option>
+                  <option value="Internship">Internship</option>
+                </select>
+
+<div role="listitem" class="career__section2__item w-dyn-item">
+                <a href="#" class="career__section2__link-overlay w-inline-block"></a>
+                <div class="career__section2__title-wrapper">
+                  <h3 class="heading-3 mb-7 t-heading-3">Sales Manager</h3><img src="<?php echo get_template_directory_uri(); ?>/assets/images/map-pin-gray.png" loading="lazy" alt="">
+                  <div fs-cmsfilter-field="location" class="body-s inline-block ml-8 text-cl-neutral-4">Sydney, Australia</div>
+                </div>
+                <div class="career__section2__tag-wrapper">
+                  <div fs-cmsfilter-field="team" class="career__section2__tag">Marketing</div>
+                  <div fs-cmsfilter-field="contract" class="career__section2__tag">Full-time</div>
+                </div>
+                <div class="flex-grow flex-horizontal justify-end">
+                  <div class="career__section2__link-wrapper z-1">
+                    <a href="#" class="career__section2__share w-button"></a>
+                    <a data-w-id="246eb581-7021-4271-afd6-1f8a64e80284" href="#" class="button button-primary bg-primary-2 carrers-btn w-button">Apply Now</a>
+                  </div>
+                </div>
+                <div fs-cmssort-field="date" fs-cmssort-type="date" class="d-hide"></div>
+              </div>
+
+
+<div role="listitem" class="career__section2__item w-dyn-item">
+                <a href="#" class="career__section2__link-overlay w-inline-block"></a>
+                <div class="career__section2__title-wrapper">
+                  <h3 class="heading-3 mb-7 t-heading-3">Sales Manager</h3><img src="<?php echo get_template_directory_uri(); ?>/assets/images/map-pin-gray.png" loading="lazy" alt="">
+                  <div fs-cmsfilter-field="location" class="body-s inline-block ml-8 text-cl-neutral-4">Sydney, Australia</div>
+                </div>
+                <div class="career__section2__tag-wrapper">
+                  <div fs-cmsfilter-field="team" class="career__section2__tag">Marketing</div>
+                  <div fs-cmsfilter-field="contract" class="career__section2__tag">Part-time</div>
+                </div>
+                <div class="flex-grow flex-horizontal justify-end">
+                  <div class="career__section2__link-wrapper z-1">
+                    <a href="#" class="career__section2__share w-button"></a>
+                    <a data-w-id="246eb581-7021-4271-afd6-1f8a64e80284" href="#" class="button button-primary bg-primary-2 carrers-btn w-button">Apply Now</a>
+                  </div>
+                </div>
+                <div fs-cmssort-field="date" fs-cmssort-type="date" class="d-hide"></div>
+              </div>
+            
+            
+              <div role="listitem" class="career__section2__item w-dyn-item">
+                <a href="#" class="career__section2__link-overlay w-inline-block"></a>
+                <div class="career__section2__title-wrapper">
+                  <h3 class="heading-3 mb-7 t-heading-3">Sales Manager</h3><img src="<?php echo get_template_directory_uri(); ?>/assets/images/map-pin-gray.png" loading="lazy" alt="">
+                  <div fs-cmsfilter-field="location" class="body-s inline-block ml-8 text-cl-neutral-4">Melbourne, Australia</div>
+                </div>
+                <div class="career__section2__tag-wrapper">
+                  <div fs-cmsfilter-field="team" class="career__section2__tag">Marketing</div>
+                  <div fs-cmsfilter-field="contract" class="career__section2__tag">Internship</div>
+                </div>
+                <div class="flex-grow flex-horizontal justify-end">
+                  <div class="career__section2__link-wrapper z-1">
+                    <a href="#" class="career__section2__share w-button"></a>
+                    <a data-w-id="246eb581-7021-4271-afd6-1f8a64e80284" href="#" class="button button-primary bg-primary-2 carrers-btn w-button">Apply Now</a>
+                  </div>
+                </div>
+                <div fs-cmssort-field="date" fs-cmssort-type="date" class="d-hide"></div>
+              </div>
+
+

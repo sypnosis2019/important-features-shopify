@@ -1,0 +1,13 @@
+https://www.youtube.com/watch?v=GiyL4KFRNBA
+
+
+Main Points
+
+1. Use NPM Installation - For React packeges or other packeges.
+2. packeg.json
+3. Component - 
+A) Functional Component
+B) Class Component
+4. Stat And Props
+A) State - store data 
+B) Props - Property pass data from one component to Other component 

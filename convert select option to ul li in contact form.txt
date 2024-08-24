@@ -1,0 +1,320 @@
+{{ 'section-contact-form.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="contact page-width page-width--narrow section-{{ section.id }}-padding default-contact-form">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="title title-wrapper--no-top-margin inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        {{ section.settings.heading }}
+      </h2>
+    {%- else -%}
+      <h2 class="visually-hidden">{{ 'templates.contact.form.title' | t }}</h2>
+    {%- endif -%}
+    {%- liquid
+      assign contact_form_class = 'isolate'
+      if settings.animations_reveal_on_scroll
+        assign contact_form_class = 'isolate scroll-trigger animate--slide-in'
+      endif
+    -%}
+    {%- form 'contact', id: 'ContactForm', class: contact_form_class -%}
+      {%- if form.posted_successfully? -%}
+        <h2 class="form-status form-status-list form__message" tabindex="-1" autofocus>
+          {% render 'icon-success' %}
+          {{ 'templates.contact.form.post_success' | t }}
+        </h2>
+      {%- elsif form.errors -%}
+        <div class="form__message">
+          <h2 class="form-status caption-large text-body" role="alert" tabindex="-1" autofocus>
+            {% render 'icon-error' %}
+            {{ 'templates.contact.form.error_heading' | t }}
+          </h2>
+        </div>
+        <ul class="form-status-list caption-large" role="list">
+          <li>
+            <a href="#ContactForm-email" class="link">
+              {{ form.errors.translated_fields.email | capitalize }}
+              {{ form.errors.messages.email }}
+            </a>
+          </li>
+        </ul>
+      {%- endif -%}
+      
+        <div class="fields wrap-fields">
+          <label class="field__labels" for="ContactForm-name">name*</label>
+          <input
+            class="field__inputs"
+            autocomplete="name"
+            type="text"
+            id="ContactForm-name"
+            name="contact[{{ 'templates.contact.form.name' | t }}]"
+            value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+            placeholder="enter name" required
+          >         
+        </div>
+        <div class="fields field--with-error wrap-fields">
+           <label class="field__labels" for="ContactForm-email">
+            EMAIL ADDRESS*
+            </label>
+          <input
+            autocomplete="email"
+            type="email"
+            id="ContactForm-email"
+            class="field__inputs"
+            name="contact[email]"
+            spellcheck="false"
+            autocapitalize="off"
+            value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+            aria-required="true"
+            {% if form.errors contains 'email' %}
+              aria-invalid="true"
+              aria-describedby="ContactForm-email-error"
+            {% endif %}
+            placeholder="ENTER EMAIL ADDRESS" required
+          >         
+          {%- if form.errors contains 'email' -%}
+            <small class="contact__field-error" id="ContactForm-email-error">
+              <span class="visually-hidden">{{ 'accessibility.error' | t }}</span>
+              <span class="form__message">
+                {%- render 'icon-error' -%}
+                {{- form.errors.translated_fields.email | capitalize }}
+                {{ form.errors.messages.email -}}
+              </span>
+            </small>
+          {%- endif -%}
+        </div>    
+    
+      <div class="fields wrap-fields">
+        <label class="field__labels" for="ContactForm-phone">CONTACT NUMBER*</label>
+        <input
+          type="tel"
+          id="ContactForm-phone"
+          class="field__inputs"
+          autocomplete="tel"
+          name="contact[{{ 'templates.contact.form.phone' | t }}]"
+          pattern="[0-9\-]*"
+          value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+          placeholder="enter CONTACT NUMBER" required
+        >       
+      </div>
+
+<div id="main_enquiry" class="fields enquiry_type">
+  <label class="field__labels" for="enquiry-type">ENQUIRY TYPE*</label>
+  <div id="enquiry_value" class="enquiry_value" value="">Select</div>
+  <select  id="enquiry-type" name="contact[enquiry_type]">
+    <option value="">Select</option>
+    <option value="General Enquiry">General Enquiry</option>
+    <option value="Product Enquiry">Product Enquiry</option>
+    <option value="Customer Service">Customer Service</option>
+    <option value="Employment">Employment</option>
+    <option value="Press">Press</option> 
+  </select>
+</div>
+      
+      <div class="fields fields-block">
+         <label class="form__label field__labels field-labels-flex" for="ContactForm-body">
+          MESSAGE <span>(Maximum 500 Characters)</span>
+        </label>
+        <textarea id="ContactForm-body"
+          class="text-area field__inputs"
+          name="contact[{{ 'templates.contact.form.comment' | t }}]"          
+        >
+          {{- form.body -}}
+        </textarea>       
+      </div>
+      
+  <div class="fields">
+    <label class="field__labels" for="links">Links</label>
+    <input type="text" name="contact[links]" id="links" placeholder="attach link">
+  </div>
+      <div class="contact__button contact__buttons">
+        <button id="submitButton" type="submit" class="buttons">
+         submit enquiry
+        </button>
+      </div>
+    {%- endform -%}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('ContactForm');
+    const submitButton = document.getElementById('submitButton');
+    const requiredFields = form.querySelectorAll('[required]');
+
+    function checkRequiredFields() {
+        let allFieldsFilled = true;
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                allFieldsFilled = false;
+            }
+        });
+        submitButton.disabled = !allFieldsFilled;
+    }
+
+    requiredFields.forEach(field => {
+        field.addEventListener('input', checkRequiredFields);
+    });
+
+    checkRequiredFields(); // Initial check in case fields are pre-filled
+});
+
+</script>
+
+<script>
+
+ document.getElementById('enquiry_value').addEventListener('click', function() {
+    document.getElementById('main_enquiry').classList.toggle('active');
+});
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    var selectElement = document.getElementById('enquiry-type');
+    var enquiry_value = document.getElementById('enquiry_value');
+     var main_enquiry = document.getElementById('main_enquiry')
+    var options = selectElement.options;
+    var ul = document.createElement('ul');
+    
+    // Create list items for each option
+    for (var i = 0; i < options.length; i++) {
+      if (options[i].value) { // Skip the first "Select" option
+        var li = document.createElement('li');
+        li.textContent = options[i].text;
+        li.setAttribute('data-value', options[i].value);
+        
+        // Handle click event on list item
+        li.addEventListener('click', function() {
+          var value = this.getAttribute('data-value');
+          
+          // Update the select element
+          main_enquiry.classList.remove('active');
+          enquiry_value.classList.add('active');
+          selectElement.value = value;
+          enquiry_value.value = value;
+          enquiry_value.innerHTML = value;
+          // Optionally, you can do something else on selection
+         // alert('Selected: ' + value);
+        });
+        
+        ul.appendChild(li);
+      }
+    }
+    
+    // Insert the ul after the select element
+    selectElement.parentNode.insertBefore(ul, selectElement.nextSibling);
+  });
+  </script>
+
+<style>
+  #enquiry-type {
+      display: none;
+    }
+  .fields.enquiry_type ul {
+    display: none;
+}
+  .fields.enquiry_type ul li, div#enquiry_value {
+    list-style: none;
+    text-align: right;
+    font-size: 12px;
+    line-height: normal;
+    letter-spacing: 1.92px;
+    text-transform: uppercase;
+    font-weight: 100;
+    color: rgba(0, 0, 0, 0.25);
+}
+.fields.enquiry_type.active ul {
+    display: block;
+    margin: 0;
+}
+.fields.enquiry_type.active .enquiry_value {
+    display: none;
+}
+ .enquiry_value.active {
+    color: #000 !important;
+}
+</style>
+
+{% schema %}
+{
+  "name": "t:sections.contact-form.name",
+  "tag": "section",
+  "class": "section default-contact-form-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",      
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.contact-form.presets.name"
+    }
+  ]
+}
+{% endschema %}

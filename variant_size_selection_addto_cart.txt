@@ -1,0 +1,57 @@
+Working in pipparidley nick store.
+
+Code: Add this code in card-product.liquid file after Form code see example of form code .{%- form 'product',
+                  card_product,
+                  id: product_form_id,
+                  class: 'form',
+                  novalidate: 'novalidate',
+                  data-type: 'add-to-cart-form'
+                -%}
+
+<!-- variant Code Here -->
+                 
+                
+
+{% if card_product.variants.size > 1 %}            
+<div class="product-size-variant"> 
+<ul>        
+{% for variant in card_product.variants %} 
+    <li class="variant-lable{% if variant.available == false %} variant-lable-not-avalable {% endif %}"
+      data-id="{{ variant.id }}">
+      {{ variant.title }}
+    </li>
+{% endfor %}
+</ul>
+</div>  
+{% endif %}
+         
+          
+
+ <!-- End variant Code Here -->
+
+
+2. Add Js code in product-form.js under  class ProductForm extends HTMLElement {
+
+
+  const selects = this.querySelector('.product-size-variant');
+        const form_input = this.querySelector('.product-variant-id');
+         var hiddden_value = form_input.getAttribute('value');
+        selects.addEventListener('click', function(event) {
+    if (event.target && event.target.matches('.variant-lable')) {
+      // Get the value of data-id attribute
+      var dataId = event.target.getAttribute('data-id');
+      //console.log('Clicked size with data-id:', dataId);
+      //console.log('Form_id:', form_input);
+      form_input.setAttribute('value', dataId);
+
+      document.querySelectorAll('.variant-lable').forEach(function(item) {
+        item.classList.remove('acctv');
+      });
+
+      // Add the active class to the clicked li element
+      event.target.classList.add('acctv');
+       
+      
+    }
+
+Save aand see content.

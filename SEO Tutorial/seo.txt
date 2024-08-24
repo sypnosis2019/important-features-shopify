@@ -1,0 +1,40 @@
+https://www.youtube.com/watch?v=tND8v0ZKN6o
+
+
+
+//Google's algorithm ranks your website on three main factors: on-page SEO, off-page SEO, and technical SEO:
+
+1. On-page
+2. Off Page
+
+A. Main Points For SEO On-page
+
+https://blog.hubspot.com/blog/tabid/6307/bid/33655/a-step-by-step-guide-to-flawless-on-page-seo-free-template.aspx
+
+1. keyword - you can use googletrend for finding more searched keywords.
+2.High-Quality Page Content
+3. Page Titles
+4. Headers, breadcrumbs
+5. Meta Descriptions
+6. Image Alt-text
+7. Structured Markup
+8. Page URLs
+9. Internal Linking
+10. Mobile Responsiveness
+11. Site Speed
+
+
+B. Main Points For SEO OF-page (MOZ extension for checking site PA(page authority) and DA(Domain authority) performaence)
+Off-page SEO" (also called "off-site SEO") refers to actions taken outside of your own website to impact your rankings within search engine results pages (SERPs). 
+
+1. submission of site online
+2. create a profile on other popular site like  wordpress etc to come trafic.
+3. create a blogs for you site for trafic.
+4. guist bloging - register your blog to other popular guist blog account.
+5. Article Submison - https://www.sooperarticles.com/
+6. classified add Submission
+7. blog submission
+8. Social bookmarking submission on multiple sites
+9. buisness listing in seo
+10.Directory Submission
+11. Image submission

@@ -1,0 +1,43 @@
+Site Example https://briqfurniture.com/collections/sofas
+
+This is liquid file you can create a snippts with any name and call this on collection page
+
+<ul id="collection-product-variants">
+  {% for option in product.options %}
+  {% if option == "Color" or option == "Colour" %}
+  {% assign index = forloop.index0 %}
+  {% assign colorlist = '' %}
+  {% assign color = '' %}
+  {% for variant in product.variants %}
+  {% capture color %}
+  {{ variant.options[index] }}
+  {% endcapture %}
+  {% unless colorlist contains color %}                        
+  <li>
+    <input type="radio" name="id" value="{{variant.id}}" id="radio_{{variant.id}}">
+    <label variation_img="{{ variant.image.src | img_url: '1000x' }}" title="{{color}}" style="background-image:url({{ variant.image.src | img_url: 'small' }})"><span style="background-color: {{color}};" class="colorcode {{ color | handle }}">{{color}}</span></label>
+  </li>
+  {% capture tempList %}
+  {{colorlist | append: color | append: ' '}}
+  {% endcapture %}
+  {% assign colorlist = tempList %}
+  {% endunless %}
+  {% endfor %}
+  {% endif %}
+  {% endfor %}
+</ul>
+
+After this liquid code you need to add js code on theme.js or any js file you want
+
+$(document).ready(function(){
+	$('#collection-product-variants label').mouseover(function(e){ 
+      var imagePath = $(this).attr('variation_img');
+      $(this).parents('.collection-with-variants').find('img.grid_image_absolute').attr('src', imagePath);
+      $(this).parents('.collection-with-variants').find('img.grid_image_absolute').attr('srcset', imagePath);
+    }); 
+
+//     $('#collection-product-variants label').mouseleave(function(){ 
+//       var MainImg = $(this).parents('.collection-with-variants').find('img.grid_image_absolute').attr('dataImg');
+//       $(this).parents('.collection-with-variants').find('img.grid_image_absolute').attr('src', MainImg);
+//     }); 
+});

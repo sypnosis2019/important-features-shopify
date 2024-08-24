@@ -1,0 +1,11 @@
+$(document).ready(function(){
+
+$(".site-nav__link--main").click(function(){
+   $('.site-nav__link--main.checked').not(this).removeClass('checked');
+    $(this).toggleClass('checked');
+ })
+  
+
+ 
+  
+  });

@@ -1,0 +1,105 @@
+$(document).ready(function() {
+  
+  // Add to cart js
+  
+  $(document).on('click', '.addtocart_pys', function(e){
+    e.preventDefault();
+    var variant_id = $(this).attr('variant-id');
+    var qty = 1;
+    addToCart(variant_id,qty);
+  });
+
+  $(document).on('click', '.add_to_cart_pys', function(e){
+    e.preventDefault();
+    var variant_id = $(this).attr('variant-id');
+    var qty = $(this).closest('.product-form').find('.qty_pys').val();
+    addToCart(variant_id,qty);
+  });
+
+  var shop_url = window.origin;
+      
+  function addToCart(variant_id,qty){
+    $.post(shop_url+"/cart/add.js", { id: variant_id,quantity:qty }, function(result){
+      window.location.href = '/cart';
+    });
+  }
+
+  // variant select js
+  
+  jQuery('.option_1 .variant_swatch').on('click', function() {
+    $('.option_1 .variant_swatch').removeClass('active');
+    $(this).addClass('active');
+    setTimeout(function() {
+      set_variant();
+    }, 100);
+  });
+  jQuery('.option_2 .variant_swatch').on('click', function() {
+    $('.option_2 .variant_swatch').removeClass('active');
+    $(this).addClass('active');
+    setTimeout(function() {
+      set_variant();
+    }, 100);
+  });
+  jQuery('.option_3 .variant_swatch').on('click', function() {
+    $('.option_3 .variant_swatch').removeClass('active');
+    $(this).addClass('active');
+    setTimeout(function() {
+      set_variant();
+    }, 100);
+  });
+      
+  function  set_variant(){
+
+    var newar=[];            
+    jQuery(document).find('.single_option_selector').each(function(){
+      if(jQuery(this).closest('.product-form').length>0){
+        newar.push(jQuery(this).find('.kg_variant.active').attr('data-value'));
+      }
+    })
+
+    if(newar.length>0){
+      
+      var thisvals=newar.join(' / ');
+
+      alert(thisvals);
+       jQuery('.select_pys').find('option').each(function(){
+
+          //alert($(this).data('title'));
+
+        if($(this).data('title') == thisvals){
+
+          jQuery('.select_pys').val($(this).attr('value'));
+
+          jQuery(this).closest('.product-form').find('.add_to_cart_pys').attr('variant-id', $(this).attr('value'));
+
+          var available = $(this).attr('data-available');
+
+          var changeprice = $(this).attr('data-price');
+          $(".changeprice span").text(changeprice);
+          
+
+          
+
+          if(available == 'true'){
+            $('.add_to_cart_pys').removeAttr('disabled');
+            $('.add_to_cart_pys span').text('Add To Cart');
+          }else{
+            $('.add_to_cart_pys').attr('disabled', true);
+            $('.add_to_cart_pys span').text('Sold Out');
+          }
+
+        }
+      })
+
+    }
+
+    //var changeprice = jQuery('.select_pys').val($(this).attr('data-price'));
+    
+  }
+  
+});
+
+
+
+
+

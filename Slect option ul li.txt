@@ -1,0 +1,70 @@
+Js
+
+$(document).ready(function () {
+var  drvalue = $(".uldropdown-inner input[type='radio']:checked").val(); 
+$('.selecevalue').html(drvalue);   
+
+$(".uldropdown-inner input[type='radio']").click(function(){
+ var  drvalue1 = $(".uldropdown-inner input[type='radio']:checked").val();
+ $('.selecevalue').html(drvalue1);   
+});
+  
+});  
+
+var $el = $(".uldropdown-title");
+$el.click(function(e){
+  e.stopPropagation();
+  $(this).toggleClass('active');
+});
+$(document).on('click',function(e){
+  if(($(e.target) != $el) && ($el.hasClass('active'))){
+  $el.removeClass('active');  
+}
+});
+
+Css
+
+.product-form__input .uldropdown-inner input[type=radio]+label {
+    margin: 0;
+    width: 100%;
+    border-radius: 0;
+    margin-top: -1px;
+}
+.uldropdown-title {
+    border: 1px solid;
+    padding: 8px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+    cursor: pointer;
+}
+.selecevalue {
+    font-size: 14px;
+    color: #000;
+}
+.uldropdown {
+    position: relative;
+}
+.uldropdown-inner {
+    position: absolute;
+    top: 100%;
+    display: none;
+}
+.uldropdown-title.active + .uldropdown-inner {
+    display: block;
+}
+.uldropdown-title.active  img {
+    transform: rotate(180deg);
+}
+
+
+Div
+
+ <div class="uldropdown-title"> 
+        <span class="selecevalue"> </span>
+        <span class="seleceicon"><img src="{{ 'down-ar.svg' | asset_url }}" /> </span>
+        </div>
+        <div class="uldropdown-inner">
+          {% render 'product-variant-options', product: product, option: option, block: block %}
+        </div>

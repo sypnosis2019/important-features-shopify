@@ -1,0 +1,33 @@
+github.com account
+sypnosis2019
+@dmin!23456
+
+Steps 1 -  Download shopify theme from shopify store.
+
+Step 2- create a Folder and extract shopify theme anywhere you want.
+
+Step 3: After you need to install git on your computer. 
+
+Step 4- then opent git cmd terminal. 
+
+Step 5 - login github account and create a repo for your shopify theme.
+
+Step 6 - Go inside shopify theme folder and run following cmd on your terminal
+
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/sypnosis2019/unsinkableship.git
+git push -u origin main
+
+Step 7 - After all this your shopify theme will connect with your git repo account.
+
+Step -8 After all this you need to login your shopify account and connect github from shopify and select your repo with branch and connect this.
+
+Step -9 After this you can update file on your local folder shopify theme and push this changes to your repo by following cmd.
+
+git add filename
+git commit -m "changes"
+git branch -M main
+git push -u origin main

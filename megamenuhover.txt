@@ -1,0 +1,69 @@
+https://community.shopify.com/c/shopify-design/dawn-theme-how-to-add-the-ability-to-hover-over-dropdown-in/m-p/1334252#M348940
+
+For the recent Dawn updates, you can use the following code. It's a bit long and not the best formatted, but it works alright.
+
+First, you need to find the  .mega-menu__content container in your header file and add the following events:
+
+onmouseover="jackMousein(this)" onmouseleave="jackMouseout(this)"
+Copy
+ 
+
+You can add the following JS at the end of the header file(before the schema content).
+
+For Hovring issue add After css
+
+ details[open]:hover>.header__menu-item:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    background-color: transparent;
+    height: 100%;
+    top: 80%;
+    z-index: 9;
+    opacity: 0;
+}
+
+ 
+
+<script>
+    function jackMousein(x){
+        let nodd = x.parentElement;
+        nodd.setAttribute('megaopen', true)
+    }
+    function jackMouseout(x){
+        let  nodd = x.parentElement;
+        nodd.removeAttribute('megaopen')
+    }
+    let items = document.querySelector(".header__inline-menu").querySelectorAll("details");
+    items.forEach(item => {
+        
+        item.addEventListener("mouseover", () => {
+            item.setAttribute("open", true);
+            item.querySelector("ul").addEventListener("mouseleave", () => {
+                setTimeout(function(){
+                    if(item.hasAttribute('megaopen')){
+                        item.setAttribute("open", true);
+                    }
+                    else{
+                        
+                        item.removeAttribute("open");
+                    }
+                }, 500);
+            });
+            item.addEventListener("mouseleave", () => {
+                
+                setTimeout(function(){
+                    if(item.hasAttribute('megaopen')){
+                        item.setAttribute("open", true); 
+                    }
+                    else{
+                        
+                        item.removeAttribute("open");
+                    }
+                }, 100);
+            });
+        }); 
+    });
+</script>
+
